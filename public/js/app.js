@@ -1435,7 +1435,11 @@ Vue.component('modallink', __webpack_require__(68));
 Vue.component('formulario', __webpack_require__(71));
 var app = new Vue({
     el: '#app',
-    store: store
+    store: store,
+    mounted: function mounted() {
+        console.log("ok");
+        document.getElementById('app').style.display = "block";
+    }
 });
 
 /***/ }),

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Artigo;
+
 
 class ArtigosController extends Controller
 {
@@ -19,10 +21,7 @@ class ArtigosController extends Controller
             ["titulo"=>"Lista de artigos","url"=>""]
         ]);
 
-        $listaArtigos = json_encode([
-            ["id"=>1,"titulo"=>"PHP 00", "descricao"=>"Curso de PHP 00"],
-            ["id"=>2,"titulo"=>"Vue JS", "descricao"=>"Curso de Vue JS"],
-        ]);
+        $listaArtigos = json_encode(Artigo::all());
         
         return view('admin.artigos.index', compact('listaMigalhas', 'listaArtigos'));
     }
@@ -45,7 +44,10 @@ class ArtigosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $data = $request->all();
+        Artigo::create($data);
+        return redirect()->back();
     }
 
     /**
