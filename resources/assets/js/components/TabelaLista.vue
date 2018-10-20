@@ -19,32 +19,34 @@
                         <td v-for="i in item" :key="i.id">{{i}}</td>
                         
                         <td v-if="detalhe || editar || deletar">
-                            <form :id="index" v-if="deletar && token" :action="deletar" method="post">
+                            <form :id="index" v-if="deletar && token" :action="deletar + item.id" method="post">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" :value="token">
 
                                 <a v-if="detalhe && !modal" :href="detalhe">Detalhe |</a>
-                                <modallink v-if="detalhe && modal" :item="item" tipo="link" nome="detalhe" titulo="Detalhe |" css=""></modallink>
+                                <modallink v-if="detalhe && modal" :item="item" :url="detalhe" tipo="link" nome="detalhe" titulo="Detalhe |" css=""></modallink>
 
                                 <a v-if="editar && !modal" :href="editar">Editar |</a>
-                                <modallink v-if="editar && modal" :item="item" tipo="link" nome="editar" titulo="Editar |" css=""></modallink>
+                                <modallink v-if="editar && modal" :item="item" :url="editar" tipo="link" nome="editar" titulo="Editar |" css=""></modallink>
+                                
                                 <a href="#" v-on:click="executaForm(index)"> Deletar</a>
+
                             </form>
                             <span v-if="!token">
                                 <a v-if="detalhe && !modal" :href="detalhe">Detalhe |</a>
-                                <modallink v-if="detalhe && modal" :item="item" tipo="link" nome="detalhe" titulo="Detalhe |" css=""></modallink>
+                                <modallink v-if="detalhe && modal" :item="item" :url="detalhe" tipo="link" nome="detalhe" titulo="Detalhe |" css=""></modallink>
 
                                 <a v-if="editar && !modal" :href="editar">Editar |</a>
-                                <modallink v-if="editar && modal" tipo="button" nome="editar" titulo="Editar |" css=""></modallink>
+                                <modallink v-if="editar && modal" tipo="button" :url="editar" nome="editar" titulo="Editar |" css=""></modallink>
                                 <a v-if="deletar" :href="deletar">Deletar </a> 
                             </span>
 
                             <span v-if="token && !deletar">
                                 <a v-if="detalhe && !modal" :href="detalhe">Detalhe |</a>
-                                <modallink v-if="detalhe && modal" :item="item" tipo="link" nome="detalhe" titulo="Detalhe |" css=""></modallink>
+                                <modallink v-if="detalhe && modal" :item="item" :url="detalhe" tipo="link" nome="detalhe" titulo="Detalhe |" css=""></modallink>
                                 
                                 <a v-if="editar && !modal" :href="editar">Editar </a>
-                                <modallink v-if="editar && modal" tipo="button" nome="editar" titulo="Editar" css=""></modallink> 
+                                <modallink v-if="editar && modal" tipo="button" :url="editar" :item="item" nome="editar" titulo="Editar" css=""></modallink> 
                             </span>
                                 
                         </td>
@@ -81,7 +83,7 @@
         },
         computed:{
             lista:function(){   
-
+                let lista = this.itens.data;
                 let ordem = this.ordemAux;
                 let ordemCol = this.ordemAuxCol;
                 ordem = ordem.toLowerCase();
@@ -89,14 +91,14 @@
 
                 if(ordem == "asc"){
                     //ordena lista menor para maior
-                    this.itens.sort(function(a,b){
+                    lista.sort(function(a,b){
                         if (Object.values(a)[ordemCol] > Object.values(b)[ordemCol]) { return 1;}
                         if (Object.values(a)[ordemCol] < Object.values(b)[ordemCol]) { return -1;}
                         return 0;
                     });
                 }else{
                     //ordena lista maior para menor
-                    this.itens.sort(function(a,b){
+                    lista.sort(function(a,b){
                         if (Object.values(a)[ordemCol] < Object.values(b)[ordemCol]) { return 1;}
                         if (Object.values(a)[ordemCol] > Object.values(b)[ordemCol]) { return -1;}
                         return 0;
@@ -104,7 +106,7 @@
                 }
 
                 if(this.buscar){
-                    return this.itens.filter(res => {
+                    return lista.filter(res => {
                         res = Object.values(res);
                         for(let k = 0;k < res.length; k++){                    
                         //pega o titulo e o texto, transforma em letra minúscula, verifica se retorna um numero positivo 
@@ -114,12 +116,9 @@
                     }
                     return false;
                     });
-                }
+                }             
 
-                
-
-
-                return this.itens;
+                return lista;
             }
         }
     }

@@ -45181,6 +45181,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['titulos', 'itens', 'ordem', 'ordemCol', 'criar', 'detalhe', 'editar', 'deletar', 'token', 'modal'],
@@ -45210,6 +45212,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         lista: function lista() {
             var _this = this;
 
+            var lista = this.itens.data;
             var ordem = this.ordemAux;
             var ordemCol = this.ordemAuxCol;
             ordem = ordem.toLowerCase();
@@ -45217,7 +45220,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             if (ordem == "asc") {
                 //ordena lista menor para maior
-                this.itens.sort(function (a, b) {
+                lista.sort(function (a, b) {
                     if (Object.values(a)[ordemCol] > Object.values(b)[ordemCol]) {
                         return 1;
                     }
@@ -45228,7 +45231,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             } else {
                 //ordena lista maior para menor
-                this.itens.sort(function (a, b) {
+                lista.sort(function (a, b) {
                     if (Object.values(a)[ordemCol] < Object.values(b)[ordemCol]) {
                         return 1;
                     }
@@ -45240,7 +45243,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
 
             if (this.buscar) {
-                return this.itens.filter(function (res) {
+                return lista.filter(function (res) {
                     res = Object.values(res);
                     for (var k = 0; k < res.length; k++) {
                         //pega o titulo e o texto, transforma em letra minúscula, verifica se retorna um numero positivo 
@@ -45252,7 +45255,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             }
 
-            return this.itens;
+            return lista;
         }
     }
 });
@@ -45360,7 +45363,7 @@ var render = function() {
                           {
                             attrs: {
                               id: index,
-                              action: _vm.deletar,
+                              action: _vm.deletar + item.id,
                               method: "post"
                             }
                           },
@@ -45388,6 +45391,7 @@ var render = function() {
                               ? _c("modallink", {
                                   attrs: {
                                     item: item,
+                                    url: _vm.detalhe,
                                     tipo: "link",
                                     nome: "detalhe",
                                     titulo: "Detalhe |",
@@ -45406,6 +45410,7 @@ var render = function() {
                               ? _c("modallink", {
                                   attrs: {
                                     item: item,
+                                    url: _vm.editar,
                                     tipo: "link",
                                     nome: "editar",
                                     titulo: "Editar |",
@@ -45445,6 +45450,7 @@ var render = function() {
                               ? _c("modallink", {
                                   attrs: {
                                     item: item,
+                                    url: _vm.detalhe,
                                     tipo: "link",
                                     nome: "detalhe",
                                     titulo: "Detalhe |",
@@ -45463,6 +45469,7 @@ var render = function() {
                               ? _c("modallink", {
                                   attrs: {
                                     tipo: "button",
+                                    url: _vm.editar,
                                     nome: "editar",
                                     titulo: "Editar |",
                                     css: ""
@@ -45494,6 +45501,7 @@ var render = function() {
                               ? _c("modallink", {
                                   attrs: {
                                     item: item,
+                                    url: _vm.detalhe,
                                     tipo: "link",
                                     nome: "detalhe",
                                     titulo: "Detalhe |",
@@ -45512,6 +45520,8 @@ var render = function() {
                               ? _c("modallink", {
                                   attrs: {
                                     tipo: "button",
+                                    url: _vm.editar,
+                                    item: item,
                                     nome: "editar",
                                     titulo: "Editar",
                                     css: ""
@@ -45877,10 +45887,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['tipo', 'nome', 'titulo', 'css', 'item'],
+    props: ['tipo', 'nome', 'titulo', 'css', 'item', 'url'],
     methods: {
         preencheFormulario: function preencheFormulario() {
-            this.$store.commit('setItem', this.item);
+            var _this = this;
+
+            axios.get(this.url + this.item.id).then(function (res) {
+                _this.$store.commit('setItem', res.data);
+            });
+            //this.$store.commit('setItem', this.item);
         }
     }
 });
@@ -46120,7 +46135,7 @@ var render = function() {
       class: _vm.css,
       attrs: {
         action: _vm.action,
-        method: "defineMethod",
+        method: _vm.defineMethod,
         enctype: _vm.enctype
       }
     },
