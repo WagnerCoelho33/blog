@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use App\User;
 
-class UsuariosController extends Controller
+class AutoresController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +18,12 @@ class UsuariosController extends Controller
     {
         $listaMigalhas = json_encode([
             ["titulo"=>"Home","url"=>route('home')],
-            ["titulo"=>"Lista de usuários","url"=>""]
+            ["titulo"=>"Lista de autores","url"=>""]
         ]);
 
-        $listaModelo = User::select('id', 'name', 'email')->paginate(5);
+        $listaModelo = User::select('id', 'name', 'email')->where('autor', '=', 'S')->paginate(5);
         
-        return view('admin.usuarios.index', compact('listaMigalhas', 'listaModelo'));
+        return view('admin.autores.index', compact('listaMigalhas', 'listaModelo'));
     }
 
     /**
@@ -43,7 +43,7 @@ class UsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {              
+    {
         $data = $request->all();
         $validacao = \Validator::make($data, [
             'name' => 'required|string|max:255',

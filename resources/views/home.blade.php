@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <caixa qtd="3" titulo="Autores" url="#" cor="red" icone="ion-person"></caixa>
+                    <caixa qtd="3" titulo="Autores" url="{{route('autores.index')}}" cor="red" icone="ion-person"></caixa>
                 </div>
 
             </div>       

@@ -45468,7 +45468,7 @@ var render = function() {
                             _vm.editar && _vm.modal
                               ? _c("modallink", {
                                   attrs: {
-                                    tipo: "button",
+                                    tipo: "link",
                                     url: _vm.editar,
                                     nome: "editar",
                                     titulo: "Editar |",

@@ -37,7 +37,7 @@
                                 <modallink v-if="detalhe && modal" :item="item" :url="detalhe" tipo="link" nome="detalhe" titulo="Detalhe |" css=""></modallink>
 
                                 <a v-if="editar && !modal" :href="editar">Editar |</a>
-                                <modallink v-if="editar && modal" tipo="button" :url="editar" nome="editar" titulo="Editar |" css=""></modallink>
+                                <modallink v-if="editar && modal" tipo="link" :url="editar" nome="editar" titulo="Editar |" css=""></modallink>
                                 <a v-if="deletar" :href="deletar">Deletar </a> 
                             </span>
 
