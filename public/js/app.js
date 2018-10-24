@@ -1382,7 +1382,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(13);
-module.exports = __webpack_require__(74);
+module.exports = __webpack_require__(77);
 
 
 /***/ }),
@@ -1433,6 +1433,9 @@ Vue.component('migalhas', __webpack_require__(62));
 Vue.component('modal', __webpack_require__(65));
 Vue.component('modallink', __webpack_require__(68));
 Vue.component('formulario', __webpack_require__(71));
+//Vue.component('ckeditor', require('./components/EditorCk.vue'));
+Vue.component('artigocard', __webpack_require__(74));
+
 var app = new Vue({
     el: '#app',
     store: store,
@@ -44793,7 +44796,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { class: _vm.defineCor }, [
-    _c("div", { staticClass: "panel-heading" }, [_vm._v(_vm._s(_vm.titulo))]),
+    _vm.titulo
+      ? _c("div", { staticClass: "panel-heading" }, [
+          _vm._v(_vm._s(_vm.titulo))
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "panel-body" }, [_vm._t("default")], 2)
   ])
@@ -45208,6 +45215,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
 
     },
+    filters: {
+        formataData: function formataData(value) {
+            if (!value) return '';
+            value = value.toString();
+            if (value.split('-').length == 3) {
+                value = value.split('-');
+                return value[2] + '/' + value[1] + '/' + value[0];
+            }
+            return value;
+        }
+    },
     computed: {
         lista: function lista() {
             var _this = this;
@@ -45352,7 +45370,9 @@ var render = function() {
             { key: item.id },
             [
               _vm._l(item, function(i) {
-                return _c("td", { key: i.id }, [_vm._v(_vm._s(i))])
+                return _c("td", { key: i.id }, [
+                  _vm._v(_vm._s(_vm._f("formataData")(i)))
+                ])
               }),
               _vm._v(" "),
               _vm.detalhe || _vm.editar || _vm.deletar
@@ -45637,7 +45657,7 @@ var render = function() {
     "ol",
     { staticClass: "breadcrumb" },
     _vm._l(_vm.lista, function(item) {
-      return _c("li", [
+      return _c("li", { key: item.id }, [
         item.url
           ? _c("a", { class: _vm.defineClass, attrs: { href: item.url } }, [
               _vm._v(_vm._s(item.titulo))
@@ -46171,6 +46191,145 @@ if (false) {
 
 /***/ }),
 /* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(75)
+/* template */
+var __vue_template__ = __webpack_require__(76)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/ArtigoCard.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-691d5716", Component.options)
+  } else {
+    hotAPI.reload("data-v-691d5716", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['titulo', 'descricao', 'imagem', 'data', 'autor', 'sm', 'md', 'link'],
+    filters: {
+        formataData: function formataData(value) {
+            if (!value) return '';
+            value = value.toString();
+            value = value.split('-');
+            return value[2] + '/' + value[1] + '/' + value[0];
+        }
+    }
+});
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { class: "col-sm-" + (_vm.sm || "6") + " col-md-" + (_vm.md || "4") },
+    [
+      _c("div", { staticClass: "thumbnail" }, [
+        _c("img", {
+          attrs: {
+            src:
+              "https://image.freepik.com/vetores-gratis/fundo-de-aquarela_1176-218.jpg",
+            alt: "..."
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "caption" }, [
+          _c("small", [
+            _vm._v(
+              _vm._s(_vm._f("formataData")(_vm.data)) +
+                " - " +
+                _vm._s(_vm.autor)
+            )
+          ]),
+          _vm._v(" "),
+          _c("h3", [_vm._v(_vm._s(_vm.titulo))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.descricao))]),
+          _vm._v(" "),
+          _c("p", [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { href: _vm.link, role: "button" }
+              },
+              [_vm._v("Ler Mais")]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-691d5716", module.exports)
+  }
+}
+
+/***/ }),
+/* 77 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

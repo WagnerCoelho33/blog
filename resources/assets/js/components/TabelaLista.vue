@@ -16,7 +16,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item, index) in lista" :key="item.id">
-                        <td v-for="i in item" :key="i.id">{{i}}</td>
+                        <td v-for="i in item" :key="i.id">{{i | formataData}}</td>
                         
                         <td v-if="detalhe || editar || deletar">
                             <form :id="index" v-if="deletar && token" :action="deletar + item.id" method="post">
@@ -80,6 +80,17 @@
                 }
             }
 
+        },
+        filters:{
+            formataData: function(value){
+                if(!value) return '';
+                value = value.toString();
+                if(value.split('-').length == 3){
+                    value = value.split('-');
+                    return value[2] + '/' + value[1]+ '/' + value[0];
+                }
+                return value;
+            }
         },
         computed:{
             lista:function(){   

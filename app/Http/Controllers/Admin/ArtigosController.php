@@ -17,12 +17,27 @@ class ArtigosController extends Controller
     public function index()
     {
         $listaMigalhas = json_encode([
-            ["titulo"=>"Home","url"=>route('home')],
+            ["titulo"=>"Admin","url"=>route('admin')],
             ["titulo"=>"Lista de artigos","url"=>""]
         ]);
 
-        $listaArtigos = Artigo::select('id', 'titulo', 'descricao', 'data')->paginate(5);
+        // $listaArtigos = Artigo::select('id', 'titulo', 'descricao', 'user_id', 'data')->paginate(5);
         
+        // foreach($listaArtigos as $key => $value){
+            // $value->user_id = \App\User::find($value->user_id)->name;
+            //$value->user_id = $value->user->name;
+            //unset($value->user);
+        // }
+
+        // $listaArtigos = DB::table('artigos')
+        //                 ->join('users', 'users.id', '=', 'artigos.user_id')
+        //                 ->select('artigos.id', 'artigos.titulo', 'artigos.descricao', 'users.name', 'artigos.data')
+        //                 ->whereNull('deleted_at')
+        //                 ->paginate(5);
+
+        $listaArtigos = Artigo::listaArtigos(5);
+
+
         return view('admin.artigos.index', compact('listaMigalhas', 'listaArtigos'));
     }
 
@@ -58,8 +73,8 @@ class ArtigosController extends Controller
         }
                 
         // dd($request->all());
-        
-        Artigo::create($data);
+        $user = auth()->user();
+        $user->artigos()->create($data);
         return redirect()->back();
     }
 
@@ -107,8 +122,9 @@ class ArtigosController extends Controller
         }
                 
         // dd($request->all());
-        
-        Artigo::find($id)->update($data);
+
+        $user = auth()->user();        
+        $user->artigos()->find($id)->update($data);
         return redirect()->back();
     }
 

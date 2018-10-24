@@ -18,9 +18,9 @@
             <migalhas :lista="{{$listaMigalhas}}"></migalhas>
                   
             <tabela-lista 
-                :titulos="['#', 'Titulo', 'Descrição', 'Data']"
+                :titulos="['#', 'Titulo', 'Descrição', 'Autor', 'Data']"
                 :itens="{{json_encode($listaArtigos)}}"
-                ordem="desc" ordemCol="1"
+                ordem="desc" ordemCol="0"
                 criar="#" detalhe="/admin/artigos/" editar="/admin/artigos/" deletar="/admin/artigos/" token="{{ csrf_token() }}"
                 modal="sim"
             ></tabela-lista>
@@ -45,13 +45,13 @@
             </div>
 
             <div class="form-group">
-                <label for="conteudo">Conteúdo</label>
+            <label for="conteudo">Conteúdo</label>
                 <textarea class="form-control" name="conteudo" id="conteudo">{{old('conteudo')}}</textarea>
             </div>
 
             <div class="form-group">
             <label for="data">Data</label>
-            <input type="datetime-local" class="form-control" id="data"  name="data" value="{{old('data')}}">
+            <input type="date" class="form-control" id="data"  name="data" value="{{old('data')}}">
             </div>
 
         </formulario>
@@ -82,7 +82,7 @@
 
             <div class="form-group">
                 <label for="data">Data</label>
-                <input type="datetime-local" class="form-control" id="data"  name="data" v-model="$store.state.item.data">
+                <input type="date" class="form-control" id="data"  name="data" v-model="$store.state.item.data">
             </div>
 
         </formulario>
