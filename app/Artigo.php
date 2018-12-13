@@ -80,4 +80,22 @@ class Artigo extends Model
         
     }
 
+    public function getDataInputAttribute($value)
+
+    {
+
+        if(!$value ?? false){
+
+          return null;
+
+        }
+
+        $date = date_create($value);
+
+        return date_format($date, 'Y-m-d');
+
+    }
+
+
+
 }
